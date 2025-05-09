@@ -2,7 +2,7 @@ import pandas as pd
 from src.extractTransform import requestApiBcb
 from src.load import salvarCsv, salvarSqlite, salvarMySql
 
-dadosBcb = requestApiBcb('20191')
+dadosBcb = requestApiBcb("20191")
 
 # salvarCsv(dadosBcb, "src/datasets/meiosPagamentosTri.csv", ";",".")
 
