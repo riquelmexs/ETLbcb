@@ -1,12 +1,14 @@
-import pandas as pd
-from src.extractTransform import requestApiBcb
-from src.load import salvarCsv, salvarSqlite, salvarMySql
+# main.py
 
-dadosBcb = requestApiBcb("20191")
+from src.extractTransform import extrair_transformar
+from src.load import salvar_csv, salvar_sqlite
 
-# salvarCsv(dadosBcb, "src/datasets/meiosPagamentosTri.csv", ";",".")
+def main():
+    print("Executando ETL da Expectativa de Inflação 24 Meses...")
+    df = extrair_transformar()
+    salvar_csv(df)
+    salvar_sqlite(df)
+    print("ETL concluído com sucesso! Dados salvos em CSV e SQLite.")
 
-salvarSqlite(dadosBcb, "src/datasets/etlbcb.db", "meios_pagamentos_tri")
-
-# salvarMySql(dadosBcb, "root", "root", "localhost", "etlbcb", "meios_pagamentos_tri")
-
+if __name__ == "__main__":
+    main()

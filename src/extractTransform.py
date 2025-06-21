@@ -1,22 +1,19 @@
+
 import requests
 import pandas as pd
 
-
-def requestApiBcb(data: str) -> pd.DataFrame:
+def extrair_transformar():
     """
-    Função para extrair os dados da API do Banco Central.
-
-    Parâmetros:
-    data - string - AAAAT (Exemplo: 20191)
-
-    Saída:
-    DataFrame - Estrutura de dados do pandas
+    Extrai dados da API do Banco Central (Expectativa de Inflação em 24 meses)
+    e retorna um DataFrame com a coluna DataReferencia criada manualmente.
     """
-    url = f"https://olinda.bcb.gov.br/olinda/servico/MPV_DadosAbertos/versao/v1/odata/MeiosdePagamentosTrimestralDA(trimestre=@trimestre)?@trimestre=%27{data}%27&$format=json"
-    req = requests.get(url)
-    print("Status Code:", req.status_code)
-    dados = req.json()
+    url = "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoInflacao24Meses?$top=1000&$format=json"
+    response = requests.get(url)
+    data = response.json()
+    df = pd.json_normalize(data["value"])
 
-    df = pd.json_normalize(dados["value"])
-    df["datatrimestre"] = pd.to_datetime(df["datatrimestre"])
+    # Adiciona uma coluna de data incremental se não existir
+    if "DataReferencia" not in df.columns:
+        df["DataReferencia"] = pd.date_range(start="2022-01-01", periods=len(df), freq="W")
+
     return df
