@@ -1,18 +1,19 @@
-import pandas as pd
 
-def salvarCSV(df, nome_arquivo):
+import os
+import sqlite3
+
+def salvar_csv(df, caminho="datasets/expectativa_inflacao_24_meses.csv"):
     """
-    Salva um DataFrame em um arquivo CSV.
-
-    Parâmetros:
-    df (DataFrame): O DataFrame a ser salvo.
-    nome_arquivo (str): Nome do arquivo de saída.
-
-    Retorno:
-    None
+    Salva o DataFrame como arquivo CSV.
     """
-    try:
-        df.to_csv(nome_arquivo, index=False, encoding="utf-8")
-        print(f"✅ Arquivo '{nome_arquivo}' salvo com sucesso!")
-    except Exception as e:
-        print(f"❌ Erro ao salvar CSV: {e}")
+    os.makedirs("datasets", exist_ok=True)
+    df.to_csv(caminho, index=False)
+
+def salvar_sqlite(df, banco="datasets/dados.db", tabela="expectativa_inflacao_24_meses"):
+    """
+    Salva o DataFrame em um banco de dados SQLite.
+    """
+    os.makedirs("datasets", exist_ok=True)
+    conn = sqlite3.connect(banco)
+    df.to_sql(tabela, conn, if_exists="replace", index=False)
+    conn.close()

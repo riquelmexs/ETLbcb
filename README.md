@@ -1,21 +1,19 @@
-# Projeto ETL - Banco Central do Brasil
+# Análise Expectativa de Inflação - Data Science 2025.1
 
-## 📌 Sobre o Projeto
-Este projeto faz a extração, transformação e carga (ETL) de dados do Banco Central do Brasil.  
+Projeto ETL com dados da API do Banco Central do Brasil.
 
-### 📝 Função `salvarCSV`
-A função `salvarCSV` recebe um DataFrame e salva os dados em um arquivo CSV.  
+## Dados Utilizados
+- Fonte: [ExpectativasMercadoInflacao24Meses](https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/aplicacao)
+- Variável: Expectativa de inflação acumulada em 24 meses
 
-```python
-def salvarCSV(df, nome_arquivo):
-    """
-    Salva um DataFrame em um arquivo CSV.
+## Estrutura
+- `main.py`: pipeline ETL
+- `src/extractTransform.py`: extração de dados via API
+- `src/load.py`: salvamento em CSV e SQLite
+- `Relatorio.ipynb`: análise estatística
+- `datasets/`: saída dos dados
 
-    Parâmetros:
-    df (DataFrame): O DataFrame a ser salvo.
-    nome_arquivo (str): Nome do arquivo de saída.
-
-    Retorno:
-    None
-    """
-    df.to_csv(nome_arquivo, index=False, encoding="utf-8")
+## Resultados
+- Média estimada de inflação: ~4,30%
+- Desvio padrão: ~0,25%
+- Tendência de leve queda nas projeções de inflação
