@@ -12,7 +12,6 @@ def extrair_transformar():
     data = response.json()
     df = pd.json_normalize(data["value"])
 
-    # Adiciona uma coluna de data incremental se não existir
     if "DataReferencia" not in df.columns:
         df["DataReferencia"] = pd.date_range(start="2022-01-01", periods=len(df), freq="W")
 
